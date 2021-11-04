@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Masterclass.Revit.SharedProject", "Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.shproj", "{62A0AC12-8C78-4E99-BB7E-C197B464A2AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masterclass.Revit.2022", "Masterclass.Revit.2022\Masterclass.Revit.2022.csproj", "{B9A1FD9A-E483-401E-A7DD-ED19D50F2668}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masterclass.Revit.2021", "Masterclass.Revit.2021\Masterclass.Revit.2021.csproj", "{8FC68FF2-7837-4214-BAD8-08939D9F3FCA}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems*{62a0ac12-8c78-4e99-bb7e-c197b464a2ac}*SharedItemsImports = 13
+		Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems*{8fc68ff2-7837-4214-bad8-08939d9f3fca}*SharedItemsImports = 4
+		Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems*{b9a1fd9a-e483-401e-a7dd-ed19d50f2668}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9A1FD9A-E483-401E-A7DD-ED19D50F2668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9A1FD9A-E483-401E-A7DD-ED19D50F2668}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9A1FD9A-E483-401E-A7DD-ED19D50F2668}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9A1FD9A-E483-401E-A7DD-ED19D50F2668}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FC68FF2-7837-4214-BAD8-08939D9F3FCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC68FF2-7837-4214-BAD8-08939D9F3FCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC68FF2-7837-4214-BAD8-08939D9F3FCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC68FF2-7837-4214-BAD8-08939D9F3FCA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {441A12FF-C49D-4F4D-B5D2-2E894B53A270}
+	EndGlobalSection
+EndGlobal

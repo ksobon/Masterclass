@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>62a0ac12-8c78-4e99-bb7e-c197b464a2ac</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Masterclass.Revit</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AppCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FirstButton\FirstButtonCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonView.xaml.cs">
+      <DependentUpon>SecondButtonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SpatialObjectWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\ImageUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\32x32\firstButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\32x32\secondButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>
