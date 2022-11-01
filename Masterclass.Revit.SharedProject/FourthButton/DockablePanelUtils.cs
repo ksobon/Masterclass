@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Autodesk.Revit.UI;
 
 namespace Masterclass.Revit.FourthButton
@@ -29,7 +27,10 @@ namespace Masterclass.Revit.FourthButton
 
         public static void ShowDockablePanel(UIApplication app)
         {
-
+            var panelId = new DockablePaneId(new Guid("7A8F5162-67F6-4DFB-A3C7-E397292A7B38"));
+            var dp = app.GetDockablePane(panelId);
+            if (dp != null && !dp.IsShown())
+                dp.Show();
         }
     }
 }

@@ -24,6 +24,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SpatialObjectWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\DialogUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ImageUtils.cs" />
   </ItemGroup>
   <ItemGroup>
