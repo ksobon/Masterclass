@@ -6,11 +6,15 @@ using GalaSoft.MvvmLight.Messaging;
 using Masterclass.Revit.FirstButton;
 using Masterclass.Revit.FourthButton;
 using Masterclass.Revit.SecondButton;
+using Masterclass.Revit.ThirdButton;
 
 namespace Masterclass.Revit
 {
     public class AppCommand : IExternalApplication
     {
+        public static ThirdButtonRequestHandler ThirdButtonHandler { get; set; }
+        public static ExternalEvent ThirdButtonEvent { get; set; }
+
         public Result OnStartup(UIControlledApplication app)
         {
             try
@@ -35,11 +39,16 @@ namespace Masterclass.Revit
             ribbonPanel.AddSeparator();
             SecondButtonCommand.CreateButton(ribbonPanel);
             ribbonPanel.AddSeparator();
+            ThirdButtonCommand.CreateButton(ribbonPanel);
+            ribbonPanel.AddSeparator();
             FourthButtonCommand.CreateButton(ribbonPanel);
 
             DockablePanelUtils.RegisterDockablePanel(app);
 
             app.ControlledApplication.DocumentChanged += OnDocumentChanged;
+
+            ThirdButtonHandler = new ThirdButtonRequestHandler();
+            ThirdButtonEvent = ExternalEvent.Create(ThirdButtonHandler);
 
             return Result.Succeeded;
         }

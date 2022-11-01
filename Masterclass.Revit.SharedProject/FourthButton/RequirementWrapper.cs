@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 
 namespace Masterclass.Revit.FourthButton
 {
@@ -13,12 +14,31 @@ namespace Masterclass.Revit.FourthButton
         public int PlacedCount
         {
             get { return _placedCount;}
-            set { _placedCount = value; RaisePropertyChanged(nameof(PlacedCount)); }
+            set
+            {
+                _placedCount = value;
+
+                if (value < RequiredCount)
+                    PlacedColor = new SolidColorBrush(Colors.SandyBrown);
+                else if (value == RequiredCount)
+                    PlacedColor = new SolidColorBrush(Colors.LightGreen);
+                else if (value > RequiredCount)
+                    PlacedColor = new SolidColorBrush(Colors.SandyBrown);
+
+                RaisePropertyChanged(nameof(PlacedCount));
+            }
         }
 
         public string FamilyNameAndType
         {
             get { return $"{FamilyName} - {FamilyType}"; }
+        }
+
+        private SolidColorBrush _placedColor = new SolidColorBrush(Colors.SandyBrown);
+        public SolidColorBrush PlacedColor
+        {
+            get { return _placedColor;}
+            set { _placedColor = value; RaisePropertyChanged(nameof(PlacedColor)); }
         }
 
         public RequirementWrapper(string fn, string ft, int count)

@@ -30,6 +30,14 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SpatialObjectWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ThirdButton\SpatialObjectDeletedMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ThirdButton\ThirdButtonCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ThirdButton\ThirdButtonModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ThirdButton\ThirdButtonRequestHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ThirdButton\ThirdButtonView.xaml.cs">
+      <DependentUpon>ThirdButtonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ThirdButton\ThirdButtonViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DialogUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ImageUtils.cs" />
   </ItemGroup>
@@ -52,8 +60,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)ThirdButton\ThirdButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\32x32\fourthButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\32x32\thirdButton.png" />
   </ItemGroup>
 </Project>

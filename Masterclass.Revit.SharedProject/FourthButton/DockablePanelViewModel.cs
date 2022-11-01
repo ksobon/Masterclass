@@ -13,6 +13,7 @@ namespace Masterclass.Revit.FourthButton
     public class DockablePanelViewModel : ViewModelBase
     {
         public RelayCommand LoadRequirements { get; set; }
+        public RelayCommand ClearRequirements { get; set; }
 
         private ObservableCollection<RequirementWrapper> _requirements = new ObservableCollection<RequirementWrapper>();
         public ObservableCollection<RequirementWrapper> Requirements
@@ -24,8 +25,17 @@ namespace Masterclass.Revit.FourthButton
         public DockablePanelViewModel()
         {
             LoadRequirements = new RelayCommand(OnLoadRequirements);
+            ClearRequirements = new RelayCommand(OnClearRequirements);
 
             Messenger.Default.Register<AddedElementsMessage>(this, OnAddedElementsMessage);
+        }
+
+        private void OnClearRequirements()
+        {
+            foreach (var rw in Requirements)
+            {
+                rw.PlacedCount = 0;
+            }
         }
 
         private void OnAddedElementsMessage(AddedElementsMessage obj)
