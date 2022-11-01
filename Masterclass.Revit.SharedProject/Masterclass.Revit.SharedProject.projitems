@@ -17,6 +17,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\DockablePanelUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\DockablePanelViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\FourthButtonCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FourthButton\RequirementControl.xaml.cs">
+      <DependentUpon>RequirementControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\RequirementWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonModel.cs" />
@@ -36,6 +39,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)FourthButton\DockablePanelPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)FourthButton\RequirementControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
