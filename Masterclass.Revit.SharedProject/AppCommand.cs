@@ -2,6 +2,7 @@
 using System.Linq;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
+using GalaSoft.MvvmLight.Messaging;
 using Masterclass.Revit.FirstButton;
 using Masterclass.Revit.FourthButton;
 using Masterclass.Revit.SecondButton;
@@ -45,9 +46,12 @@ namespace Masterclass.Revit
 
         private void OnDocumentChanged(object sender, DocumentChangedEventArgs e)
         {
+            if (e.Operation != UndoOperation.TransactionCommitted)
+                return;
+
             var doc = e.GetDocument();
             var addedElements = e.GetAddedElementIds().Select(x => new ElementWrapper(doc.GetElement(x))).ToList();
-
+            Messenger.Default.Send(new AddedElementsMessage(addedElements));
         }
 
         public Result OnShutdown(UIControlledApplication app)

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -24,7 +25,20 @@ namespace Masterclass.Revit.FourthButton
         {
             LoadRequirements = new RelayCommand(OnLoadRequirements);
 
-            Messenger.Default.Register();
+            Messenger.Default.Register<AddedElementsMessage>(this, OnAddedElementsMessage);
+        }
+
+        private void OnAddedElementsMessage(AddedElementsMessage obj)
+        {
+            foreach (var element in obj.AddedElements)
+            {
+                var found = Requirements.FirstOrDefault(x =>
+                    x.FamilyName == element.FamilyName && x.FamilyType == element.FamilyType);
+                if (found == null)
+                    continue;
+
+                found.PlacedCount++;
+            }
         }
 
         private void OnLoadRequirements()
