@@ -11,11 +11,13 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AppCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FirstButton\FirstButtonCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FourthButton\AddedElementsMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\DockablePanelPage.xaml.cs">
       <DependentUpon>DockablePanelPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\DockablePanelUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\DockablePanelViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FourthButton\ElementWrapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\FourthButtonCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\RequirementControl.xaml.cs">
       <DependentUpon>RequirementControl.xaml</DependentUpon>

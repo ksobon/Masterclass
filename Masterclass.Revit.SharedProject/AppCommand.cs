@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Masterclass.Revit.FirstButton;
 using Masterclass.Revit.FourthButton;
@@ -37,7 +38,16 @@ namespace Masterclass.Revit
 
             DockablePanelUtils.RegisterDockablePanel(app);
 
+            app.ControlledApplication.DocumentChanged += OnDocumentChanged;
+
             return Result.Succeeded;
+        }
+
+        private void OnDocumentChanged(object sender, DocumentChangedEventArgs e)
+        {
+            var doc = e.GetDocument();
+            var addedElements = e.GetAddedElementIds().Select(x => new ElementWrapper(doc.GetElement(x))).ToList();
+
         }
 
         public Result OnShutdown(UIControlledApplication app)

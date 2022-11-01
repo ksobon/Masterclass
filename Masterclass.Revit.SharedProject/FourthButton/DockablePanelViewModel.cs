@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using Masterclass.Revit.Utilities;
 using OfficeOpenXml;
 
@@ -22,6 +23,8 @@ namespace Masterclass.Revit.FourthButton
         public DockablePanelViewModel()
         {
             LoadRequirements = new RelayCommand(OnLoadRequirements);
+
+            Messenger.Default.Register();
         }
 
         private void OnLoadRequirements()
