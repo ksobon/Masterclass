@@ -11,6 +11,11 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AppCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FirstButton\FirstButtonCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FourthButton\DockablePanelPage.xaml.cs">
+      <DependentUpon>DockablePanelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)FourthButton\DockablePanelUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FourthButton\FourthButtonCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonView.xaml.cs">
@@ -27,9 +32,16 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\32x32\secondButton.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)FourthButton\DockablePanelPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\32x32\fourthButton.png" />
   </ItemGroup>
 </Project>
