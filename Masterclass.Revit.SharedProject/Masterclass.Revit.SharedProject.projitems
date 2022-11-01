@@ -15,6 +15,7 @@
       <DependentUpon>DockablePanelPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\DockablePanelUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FourthButton\DockablePanelViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\FourthButtonCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonModel.cs" />
