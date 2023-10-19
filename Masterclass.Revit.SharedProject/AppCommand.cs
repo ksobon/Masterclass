@@ -5,6 +5,8 @@ using Masterclass.Revit.FirstButton;
 using Masterclass.Revit.FourthButton;
 using Masterclass.Revit.SecondButton;
 using Masterclass.Revit.ThirdButton;
+using Masterclass.Revit.Utilities;
+using NLog;
 using System;
 using System.Linq;
 
@@ -12,11 +14,34 @@ namespace Masterclass.Revit
 {
     public class AppCommand : IExternalApplication
     {
+        private static readonly Logger Logger = NLogUtils.GetMasterclassLogger();
         public static ThirdButtonRequestHandler ThirdButtonHandler { get; set; }
         public static ExternalEvent ThirdButtonEvent { get; set; }
 
         public Result OnStartup(UIControlledApplication app)
         {
+            // (Konrad) Log Levels
+            Logger.Fatal("Fatal message.");
+            Logger.Error("Error message.");
+            Logger.Warn("Warning message.");
+            Logger.Info("Info message.");
+            Logger.Debug("Debug message.");
+            Logger.Trace("Trace message.");
+
+            // (Konrad) Logging message. Different constructors.
+            Logger.Debug("This is a debug message.");
+            Logger.Error(new Exception(), "This is an error message.");
+            Logger.Fatal("This is a fatal message.");
+
+            // (Konrad) Logging with custom parameters.
+            var msg = new LogEventInfo(LogLevel.Info, "", "This is a message.");
+            msg.Properties.Add("User", "Ray Donovan");
+            Logger.Info(msg);
+
+            // (Konrad) Structured messaging.
+            Logger.Info(string.Format("This is a message from {0}", "Mickey Donovan"));
+            Logger.Info("This is a message from {User}.", "Mickey Donovan");
+
             try
             {
                 app.CreateRibbonTab("Masterclass");
