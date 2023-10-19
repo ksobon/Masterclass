@@ -21,26 +21,28 @@ namespace Masterclass.Revit
         public Result OnStartup(UIControlledApplication app)
         {
             // (Konrad) Log Levels
-            Logger.Fatal("Fatal message.");
-            Logger.Error("Error message.");
-            Logger.Warn("Warning message.");
-            Logger.Info("Info message.");
-            Logger.Debug("Debug message.");
-            Logger.Trace("Trace message.");
+            // Logger.Fatal("Fatal message.");
+            // Logger.Error("Error message.");
+            // Logger.Warn("Warning message.");
+            // Logger.Info("Info message.");
+            // Logger.Debug("Debug message.");
+            // Logger.Trace("Trace message.");
+            //
+            // // (Konrad) Logging message. Different constructors.
+            // Logger.Debug("This is a debug message.");
+            // Logger.Error(new Exception(), "This is an error message.");
+            // Logger.Fatal("This is a fatal message.");
+            //
+            // // (Konrad) Logging with custom parameters.
+            // var msg = new LogEventInfo(LogLevel.Info, "", "This is a message.");
+            // msg.Properties.Add("User", "Ray Donovan");
+            // Logger.Info(msg);
+            //
+            // // (Konrad) Structured messaging.
+            // Logger.Info(string.Format("This is a message from {0}", "Mickey Donovan"));
+            // Logger.Info("This is a message from {User}.", "Mickey Donovan");
 
-            // (Konrad) Logging message. Different constructors.
-            Logger.Debug("This is a debug message.");
-            Logger.Error(new Exception(), "This is an error message.");
-            Logger.Fatal("This is a fatal message.");
-
-            // (Konrad) Logging with custom parameters.
-            var msg = new LogEventInfo(LogLevel.Info, "", "This is a message.");
-            msg.Properties.Add("User", "Ray Donovan");
-            Logger.Info(msg);
-
-            // (Konrad) Structured messaging.
-            Logger.Info(string.Format("This is a message from {0}", "Mickey Donovan"));
-            Logger.Info("This is a message from {User}.", "Mickey Donovan");
+            NLogManager.InfoLog("This is a info message with parameters.");
 
             try
             {
