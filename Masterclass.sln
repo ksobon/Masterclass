@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31205.134
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Masterclass.Revit.SharedProject", "Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.shproj", "{62A0AC12-8C78-4E99-BB7E-C197B464A2AC}"
 EndProject
@@ -11,8 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masterclass.Revit.2021", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masterclass.Revit.2023", "Masterclass.Revit.2023\Masterclass.Revit.2023.csproj", "{F3E62982-3E53-41D7-A006-7EA39440BDDE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masterclass.Revit.2020", "Masterclass.Revit.2020\Masterclass.Revit.2020.csproj", "{56EE7B46-4583-4AA9-9BC1-6705DCD8320D}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems*{56ee7b46-4583-4aa9-9bc1-6705dcd8320d}*SharedItemsImports = 4
 		Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems*{62a0ac12-8c78-4e99-bb7e-c197b464a2ac}*SharedItemsImports = 13
 		Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems*{8fc68ff2-7837-4214-bad8-08939d9f3fca}*SharedItemsImports = 4
 		Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems*{b9a1fd9a-e483-401e-a7dd-ed19d50f2668}*SharedItemsImports = 4
@@ -35,6 +38,10 @@ Global
 		{F3E62982-3E53-41D7-A006-7EA39440BDDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3E62982-3E53-41D7-A006-7EA39440BDDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3E62982-3E53-41D7-A006-7EA39440BDDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56EE7B46-4583-4AA9-9BC1-6705DCD8320D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56EE7B46-4583-4AA9-9BC1-6705DCD8320D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56EE7B46-4583-4AA9-9BC1-6705DCD8320D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56EE7B46-4583-4AA9-9BC1-6705DCD8320D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
