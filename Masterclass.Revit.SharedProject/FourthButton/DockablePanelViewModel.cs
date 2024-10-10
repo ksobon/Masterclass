@@ -57,7 +57,7 @@ namespace Masterclass.Revit.FourthButton
             if (string.IsNullOrWhiteSpace(filePath))
                 return;
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            // ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             var requirements = new List<RequirementWrapper>();
             var existingFile = new FileInfo(filePath);

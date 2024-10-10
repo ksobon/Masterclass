@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+		<RootNamespace>Masterclass.Revit</RootNamespace>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+		<GenerateDependencyFile>false</GenerateDependencyFile>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>$(DefineConstants);Revit2025</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DefineConstants>$(DefineConstants);Revit2025</DefineConstants>
+	</PropertyGroup>
+
+	<Import Project="..\Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems" Label="Shared" />
+
+	<ItemGroup>
+	  <None Remove="Masterclass.addin" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="Masterclass.addin">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommonServiceLocator" Version="2.0.2" />
+		<PackageReference Include="EPPlus" Version="4.5.3.3" />
+		<PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2025.0.0" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="echo Copying results to 2025...&#xD;&#xA;&#xD;&#xA;if not exist &quot;%25APPDATA%25\Autodesk\Revit\Addins\2025\Masterclass&quot; mkdir &quot;%25APPDATA%25\Autodesk\Revit\Addins\2025\Masterclass&quot;&#xD;&#xA;&#xD;&#xA;xcopy /Q/Y &quot;$(TargetDir)*.dll&quot; &quot;%25APPDATA%25\Autodesk\Revit\Addins\2025\Masterclass&quot;&#xD;&#xA;xcopy /Q/Y &quot;$(TargetDir)Masterclass.addin&quot; &quot;%25APPDATA%25\Autodesk\Revit\Addins\2025&quot;" />
+	</Target>
+
+</Project>

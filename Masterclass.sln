@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masterclass.Revit.2023", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masterclass.Revit.2024", "Masterclass.Revit.2024\Masterclass.Revit.2024.csproj", "{210A4B68-0053-4FDA-B82A-C7BE7BB30301}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masterclass.Revit.2025", "Masterclass.Revit.2025\Masterclass.Revit.2025.csproj", "{5584582B-E39A-4639-AC96-1764985AA8D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{210A4B68-0053-4FDA-B82A-C7BE7BB30301}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{210A4B68-0053-4FDA-B82A-C7BE7BB30301}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{210A4B68-0053-4FDA-B82A-C7BE7BB30301}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5584582B-E39A-4639-AC96-1764985AA8D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5584582B-E39A-4639-AC96-1764985AA8D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5584582B-E39A-4639-AC96-1764985AA8D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5584582B-E39A-4639-AC96-1764985AA8D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems*{210a4b68-0053-4fda-b82a-c7be7bb30301}*SharedItemsImports = 4
+		Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems*{5584582b-e39a-4639-ac96-1764985aa8d6}*SharedItemsImports = 5
 		Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems*{62a0ac12-8c78-4e99-bb7e-c197b464a2ac}*SharedItemsImports = 13
 		Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems*{8fc68ff2-7837-4214-bad8-08939d9f3fca}*SharedItemsImports = 4
 		Masterclass.Revit.SharedProject\Masterclass.Revit.SharedProject.projitems*{b9a1fd9a-e483-401e-a7dd-ed19d50f2668}*SharedItemsImports = 4

@@ -1,12 +1,15 @@
-﻿using System;
-using System.Linq;
-using Autodesk.Revit.DB.Events;
+﻿using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using GalaSoft.MvvmLight.Messaging;
 using Masterclass.Revit.FirstButton;
 using Masterclass.Revit.FourthButton;
 using Masterclass.Revit.SecondButton;
 using Masterclass.Revit.ThirdButton;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace Masterclass.Revit
 {
@@ -14,9 +17,37 @@ namespace Masterclass.Revit
     {
         public static ThirdButtonRequestHandler ThirdButtonHandler { get; set; }
         public static ExternalEvent ThirdButtonEvent { get; set; }
+        public static string AssemblyPath = string.Empty;
+
+        static AppCommand()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
+                var names = new List<string>
+                {
+                    "EPPlus.dll"
+                };
+                var assemblyName = new AssemblyName(args.Name).Name;
+                if (!names.Contains(assemblyName)) return null;
+
+                try
+                {
+                    // ReSharper disable once AssignNullToNotNullAttribute
+                    var dir = Path.Combine(Path.GetDirectoryName(AssemblyPath), names[names.IndexOf(assemblyName)] + ".dll");
+                    var result = Assembly.LoadFrom(dir);
+                    return result;
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            };
+        }
 
         public Result OnStartup(UIControlledApplication app)
         {
+            AssemblyPath = Assembly.GetAssembly(GetType()).Location;
+
             try
             {
                 app.CreateRibbonTab("Masterclass");

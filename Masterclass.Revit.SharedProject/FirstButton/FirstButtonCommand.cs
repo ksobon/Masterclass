@@ -17,7 +17,7 @@ namespace Masterclass.Revit.FirstButton
         {
             try
             {
-                MessageBox.Show("Hell world!", "AEC Tech", MessageBoxButton.OK);
+                System.Windows.MessageBox.Show("Hell world!", "AEC Tech", MessageBoxButton.OK);
 
                 return Result.Succeeded;
             }
