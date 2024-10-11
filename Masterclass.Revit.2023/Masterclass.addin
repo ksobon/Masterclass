@@ -5,7 +5,7 @@
 		<Assembly>Masterclass\Masterclass.Revit.2023.dll</Assembly>
 		<AddInId>CFB146A6-76B8-4F1D-8C0E-28B177DCB935</AddInId>
 		<FullClassName>Masterclass.Revit.AppCommand</FullClassName>
-		<VendorId>Archi-lab, LLC</VendorId>
+		<VendorId>Archi-lab,LLC</VendorId>
 		<VendorDescription>I am Konrad.</VendorDescription>
 	</AddIn>
 </RevitAddIns>

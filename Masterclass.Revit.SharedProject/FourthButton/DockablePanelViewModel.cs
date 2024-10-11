@@ -1,4 +1,5 @@
-﻿using Masterclass.Revit.Utilities;
+﻿using Autodesk.Revit.UI;
+using Masterclass.Revit.Utilities;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -58,10 +59,30 @@ namespace Masterclass.Revit.FourthButton
 
         private void OnLoadRequirements(object obj)
         {
-            var filePath = DialogUtils.SelectFile();
+            string filePath;
+            var storedFilePath = AppSettings.Instance.StoredSettings.RequirementsFilePath;
+            
+            if (!string.IsNullOrWhiteSpace(storedFilePath))
+            {
+                var dialog = new TaskDialog("Question");
+                dialog.MainInstruction = "Do you want to load Stored Settings?";
+                dialog.AddCommandLink(TaskDialogCommandLinkId.CommandLink1, "Yes");
+                dialog.AddCommandLink(TaskDialogCommandLinkId.CommandLink2, "No");
+                dialog.CommonButtons = TaskDialogCommonButtons.Cancel;
+                var dialogResult = dialog.Show();
+
+                if (dialogResult == TaskDialogResult.CommandLink1)
+                {
+                    filePath = storedFilePath;
+                    goto SkipSelectionDialog;
+                }
+            }
+
+            filePath = DialogUtils.SelectFile();
             if (string.IsNullOrWhiteSpace(filePath))
                 return;
 
+            SkipSelectionDialog:
             var requirements = new List<RequirementWrapper>();
             var existingFile = new FileInfo(filePath);
             using (var package = new ExcelPackage(existingFile))
@@ -73,7 +94,7 @@ namespace Masterclass.Revit.FourthButton
                 {
                     var fn = worksheet.Cells[row, 1].Value.ToString();
                     var ft = worksheet.Cells[row, 2].Value.ToString();
-                    var count = int.Parse(worksheet.Cells[row, 3].Value.ToString());
+                    var count = int.Parse(worksheet.Cells[row, 3].Value.ToString() ?? string.Empty);
                     var req = new RequirementWrapper(fn, ft, count);
                     requirements.Add(req);
                 }
@@ -81,6 +102,8 @@ namespace Masterclass.Revit.FourthButton
 
             Requirements.Clear();
             requirements.ForEach(x => Requirements.Add(x));
+
+            AppSettings.Instance.StoredSettings.RequirementsFilePath = filePath;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

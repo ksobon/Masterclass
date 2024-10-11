@@ -1,9 +1,11 @@
-﻿using Autodesk.Revit.DB.Events;
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Masterclass.Revit.FirstButton;
 using Masterclass.Revit.FourthButton;
 using Masterclass.Revit.SecondButton;
 using Masterclass.Revit.ThirdButton;
+using Masterclass.Revit.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -78,11 +80,68 @@ namespace Masterclass.Revit
             DockablePanelUtils.RegisterDockablePanel(app);
 
             app.ControlledApplication.DocumentChanged += OnDocumentChanged;
+            app.ControlledApplication.DocumentSaved += OnDocumentSaved;
+            app.ControlledApplication.DocumentSynchronizingWithCentral += OnDocumentSynchronizingWithCentral;
+            app.ControlledApplication.DocumentOpened += OnDocumentOpened;
 
             ThirdButtonHandler = new ThirdButtonRequestHandler();
             ThirdButtonEvent = ExternalEvent.Create(ThirdButtonHandler);
 
             return Result.Succeeded;
+        }
+
+        private void OnDocumentSaved(object sender, DocumentSavedEventArgs e)
+        {
+            var doc = e.Document;
+            if (doc == null || doc.IsFamilyDocument)
+                return;
+
+            try
+            {
+                SchemaUtils.SaveSchema(doc);
+            }
+            catch (Exception ex)
+            {
+                // ignored
+            }
+        }
+
+        private void OnDocumentOpened(object sender, DocumentOpenedEventArgs e)
+        {
+            try
+            {
+                var doc = e.Document;
+                if (doc == null || e.IsCancelled() || doc.IsFamilyDocument)
+                    return;
+
+                CheckIn(doc);
+            }
+            catch (Exception ex)
+            {
+                // ignored
+            }
+        }
+
+        private void CheckIn(Document doc)
+        {
+            var settings = SchemaUtils.LoadSchema(doc);
+            AppSettings.Instance.StoredSettings = settings ?? new StoredSettings();
+        }
+
+        private static void OnDocumentSynchronizingWithCentral(object sender, DocumentSynchronizingWithCentralEventArgs e)
+        {
+            var doc = e.Document;
+            if (doc == null || doc.IsFamilyDocument)
+                return;
+
+            try
+            {
+                SchemaUtils.SaveSchema(doc);
+            }
+            catch (Exception ex)
+            {
+                // ignored
+            }
         }
 
         private void OnDocumentChanged(object sender, DocumentChangedEventArgs e)
@@ -97,6 +156,10 @@ namespace Masterclass.Revit
 
         public Result OnShutdown(UIControlledApplication app)
         {
+            app.ControlledApplication.DocumentChanged -= OnDocumentChanged;
+            app.ControlledApplication.DocumentSynchronizingWithCentral -= OnDocumentSynchronizingWithCentral;
+            app.ControlledApplication.DocumentOpened -= OnDocumentOpened;
+
             return Result.Succeeded;
         }
     }
