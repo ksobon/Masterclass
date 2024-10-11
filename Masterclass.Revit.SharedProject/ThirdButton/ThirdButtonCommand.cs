@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
-using System.Text;
-using System.Windows.Interop;
-using Autodesk.Revit.Attributes;
+﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Masterclass.Revit.SecondButton;
 using Masterclass.Revit.Utilities;
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Reflection;
+using System.Windows;
+using System.Windows.Interop;
 
 namespace Masterclass.Revit.ThirdButton
 {
@@ -17,10 +16,21 @@ namespace Masterclass.Revit.ThirdButton
     [Journaling(JournalingMode.NoCommandData)]
     public class ThirdButtonCommand : IExternalCommand
     {
+        public static ThirdButtonView View { get; set; }
+
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             try
             {
+                if (View != null)
+                {
+                    if (View.WindowState == WindowState.Minimized)
+                        View.WindowState = WindowState.Normal;
+
+                    View.Activate();
+                    return Result.Succeeded;
+                }
+
                 var uiApp = commandData.Application;
                 var m = new ThirdButtonModel(uiApp);
                 var vm = new ThirdButtonViewModel(m);
@@ -29,10 +39,13 @@ namespace Masterclass.Revit.ThirdButton
                     DataContext = vm
                 };
 
-                var unused = new WindowInteropHelper(v)
+                _ = new WindowInteropHelper(v)
                 {
                     Owner = Process.GetCurrentProcess().MainWindowHandle
                 };
+
+                View = v;
+                View.Closing += OnViewClosing;
 
                 v.Show();
 
@@ -43,6 +56,19 @@ namespace Masterclass.Revit.ThirdButton
                 return Result.Failed;
             }
         }
+
+        private static void OnViewClosing(object sender, CancelEventArgs e)
+        {
+            View = null;
+            if (sender is ThirdButtonView view)
+            {
+                if (view.DataContext is ThirdButtonViewModel vm)
+                    vm.Clear();
+
+                view.Closing -= OnViewClosing;
+            }
+        }
+
         public static void CreateButton(RibbonPanel panel)
         {
             var assembly = Assembly.GetExecutingAssembly();

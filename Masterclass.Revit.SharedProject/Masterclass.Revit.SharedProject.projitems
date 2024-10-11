@@ -11,7 +11,6 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AppCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FirstButton\FirstButtonCommand.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)FourthButton\AddedElementsMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\DockablePanelPage.xaml.cs">
       <DependentUpon>DockablePanelPage.xaml</DependentUpon>
     </Compile>
@@ -23,6 +22,7 @@
       <DependentUpon>RequirementControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)FourthButton\RequirementWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonView.xaml.cs">
@@ -30,7 +30,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SecondButtonViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SecondButton\SpatialObjectWrapper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ThirdButton\SpatialObjectDeletedMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ThirdButton\ThirdButtonCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ThirdButton\ThirdButtonModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ThirdButton\ThirdButtonRequestHandler.cs" />
@@ -40,6 +39,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ThirdButton\ThirdButtonViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DialogUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ImageUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\RelayCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\32x32\firstButton.png" />

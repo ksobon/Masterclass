@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Masterclass.Revit.SecondButton;
+using Masterclass.Revit.Utilities;
+using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using Masterclass.Revit.SecondButton;
 
 namespace Masterclass.Revit.ThirdButton
 {
-    public class ThirdButtonViewModel : ViewModelBase
+    public class ThirdButtonViewModel : INotifyPropertyChanged
     {
         public ThirdButtonModel Model { get; set; }
         public RelayCommand<Window> Close { get; set; }
@@ -21,7 +18,7 @@ namespace Masterclass.Revit.ThirdButton
         public ObservableCollection<SpatialElementWrapper> SpatialObjects
         {
             get { return _spatialObjects; }
-            set { _spatialObjects = value; RaisePropertyChanged(() => SpatialObjects); }
+            set { _spatialObjects = value; RaisePropertyChanged(nameof(SpatialObjects)); }
         }
 
         public ThirdButtonViewModel(ThirdButtonModel model)
@@ -31,11 +28,18 @@ namespace Masterclass.Revit.ThirdButton
             Close = new RelayCommand<Window>(OnClose);
             Delete = new RelayCommand<Window>(OnDelete);
 
-            Messenger.Default.Register<SpatialObjectDeletedMessage>(this, OnSpatialObjectDeletedMessage);
+            AppCommand.Messages.SpatialObjectsDeleted += OnSpatialObjectsDeleted;
         }
 
-        private void OnSpatialObjectDeletedMessage(SpatialObjectDeletedMessage obj)
+        public void Clear()
         {
+            AppCommand.Messages.SpatialObjectsDeleted -= OnSpatialObjectsDeleted;
+        }
+
+        private void OnSpatialObjectsDeleted(object sender, EventArgs e)
+        {
+            var obj = (Messages.SpatialObjectsDeletedEventArgs)e;
+
             var spatialObjects = SpatialObjects.Where(x => !obj.Ids.Contains(x.Id));
             SpatialObjects = new ObservableCollection<SpatialElementWrapper>(spatialObjects);
         }
@@ -49,6 +53,12 @@ namespace Masterclass.Revit.ThirdButton
         private void OnClose(Window win)
         {
             win.Close();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

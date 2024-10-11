@@ -1,6 +1,5 @@
 ﻿using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
-using GalaSoft.MvvmLight.Messaging;
 using Masterclass.Revit.FirstButton;
 using Masterclass.Revit.FourthButton;
 using Masterclass.Revit.SecondButton;
@@ -18,6 +17,7 @@ namespace Masterclass.Revit
         public static ThirdButtonRequestHandler ThirdButtonHandler { get; set; }
         public static ExternalEvent ThirdButtonEvent { get; set; }
         public static string AssemblyPath = string.Empty;
+        public static Messages Messages { get; set; } = new Messages();
 
         static AppCommand()
         {
@@ -33,7 +33,8 @@ namespace Masterclass.Revit
                 try
                 {
                     // ReSharper disable once AssignNullToNotNullAttribute
-                    var dir = Path.Combine(Path.GetDirectoryName(AssemblyPath), names[names.IndexOf(assemblyName)] + ".dll");
+                    var dir = Path.Combine(Path.GetDirectoryName(AssemblyPath),
+                        names[names.IndexOf(assemblyName)] + ".dll");
                     var result = Assembly.LoadFrom(dir);
                     return result;
                 }
@@ -91,7 +92,7 @@ namespace Masterclass.Revit
 
             var doc = e.GetDocument();
             var addedElements = e.GetAddedElementIds().Select(x => new ElementWrapper(doc.GetElement(x))).ToList();
-            Messenger.Default.Send(new AddedElementsMessage(addedElements));
+            Messages.RaiseElementsAdded(new Messages.ElementsAddedEventArgs(addedElements));
         }
 
         public Result OnShutdown(UIControlledApplication app)

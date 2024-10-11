@@ -42,7 +42,6 @@
 	<ItemGroup>
 		<PackageReference Include="CommonServiceLocator" Version="2.0.2" />
 		<PackageReference Include="EPPlus" Version="4.5.3.3" />
-		<PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
 		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2025.0.0" />
 	</ItemGroup>
 

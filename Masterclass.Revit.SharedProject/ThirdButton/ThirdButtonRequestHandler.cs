@@ -1,13 +1,9 @@
-﻿using System;
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Masterclass.Revit.SecondButton;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Windows.Controls.Primitives;
-using System.Windows.Controls;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using GalaSoft.MvvmLight.Messaging;
-using Masterclass.Revit.SecondButton;
 
 namespace Masterclass.Revit.ThirdButton
 {
@@ -53,14 +49,21 @@ namespace Masterclass.Revit.ThirdButton
 
             var doc = app.ActiveUIDocument.Document;
             var ids = selected.Select(x => x.Id).ToList();
+            var deleted = new List<ElementId>();
             using (var trans = new Transaction(doc, "Delete Rooms"))
             {
                 trans.Start();
-                doc.Delete(ids);
+
+                foreach (var id in ids)
+                {
+                    doc.Delete(id);
+                    deleted.Add(id);
+                }
+                
                 trans.Commit();
             }
 
-            Messenger.Default.Send(new SpatialObjectDeletedMessage(ids));
+            AppCommand.Messages.RaiseSpatialObjectsDeleted(new Messages.SpatialObjectsDeletedEventArgs(deleted));
         }
 
         public string GetName()

@@ -1,45 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using Masterclass.Revit.Utilities;
+using OfficeOpenXml;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using Masterclass.Revit.Utilities;
-using OfficeOpenXml;
 
 namespace Masterclass.Revit.FourthButton
 {
-    public class DockablePanelViewModel : ViewModelBase
+    public class DockablePanelViewModel : INotifyPropertyChanged
     {
-        public RelayCommand LoadRequirements { get; set; }
-        public RelayCommand ClearRequirements { get; set; }
+        public RelayCommand<object> LoadRequirements { get; set; }
+        public RelayCommand<object> ClearRequirements { get; set; }
 
         private ObservableCollection<RequirementWrapper> _requirements = new ObservableCollection<RequirementWrapper>();
         public ObservableCollection<RequirementWrapper> Requirements
         {
             get { return _requirements;}
-            set { _requirements = value; RaisePropertyChanged(() => Requirements); }
+            set { _requirements = value; RaisePropertyChanged(nameof(Requirements)); }
         }
 
         public DockablePanelViewModel()
         {
-            LoadRequirements = new RelayCommand(OnLoadRequirements);
-            ClearRequirements = new RelayCommand(OnClearRequirements);
+            LoadRequirements = new RelayCommand<object>(OnLoadRequirements);
+            ClearRequirements = new RelayCommand<object>(OnClearRequirements);
 
-            Messenger.Default.Register<AddedElementsMessage>(this, OnAddedElementsMessage);
+            AppCommand.Messages.ElementsAdded += OnElementsAdded;
         }
 
-        private void OnClearRequirements()
+        public void Clean()
         {
-            foreach (var rw in Requirements)
-            {
-                rw.PlacedCount = 0;
-            }
+            AppCommand.Messages.ElementsAdded -= OnElementsAdded;
         }
 
-        private void OnAddedElementsMessage(AddedElementsMessage obj)
+        private void OnElementsAdded(object sender, EventArgs e)
         {
+            var obj = (Messages.ElementsAddedEventArgs)e;
             foreach (var element in obj.AddedElements)
             {
                 var found = Requirements.FirstOrDefault(x =>
@@ -51,13 +48,19 @@ namespace Masterclass.Revit.FourthButton
             }
         }
 
-        private void OnLoadRequirements()
+        private void OnClearRequirements(object obj)
+        {
+            foreach (var rw in Requirements)
+            {
+                rw.PlacedCount = 0;
+            }
+        }
+
+        private void OnLoadRequirements(object obj)
         {
             var filePath = DialogUtils.SelectFile();
             if (string.IsNullOrWhiteSpace(filePath))
                 return;
-
-            // ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             var requirements = new List<RequirementWrapper>();
             var existingFile = new FileInfo(filePath);
@@ -78,6 +81,12 @@ namespace Masterclass.Revit.FourthButton
 
             Requirements.Clear();
             requirements.ForEach(x => Requirements.Add(x));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

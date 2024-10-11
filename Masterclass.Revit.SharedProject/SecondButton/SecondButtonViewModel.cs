@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Masterclass.Revit.Utilities;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 
 namespace Masterclass.Revit.SecondButton
 {
-    public class SecondButtonViewModel : ViewModelBase
+    public class SecondButtonViewModel : INotifyPropertyChanged
     {
         public SecondButtonModel Model { get; set; }
         public RelayCommand<Window> Close { get; set; }
@@ -19,7 +16,7 @@ namespace Masterclass.Revit.SecondButton
         public ObservableCollection<SpatialElementWrapper> SpatialObjects
         {
             get { return _spatialObjects; }
-            set { _spatialObjects = value; RaisePropertyChanged(() => SpatialObjects); }
+            set { _spatialObjects = value; RaisePropertyChanged(nameof(SpatialObjects)); }
         }
 
         public SecondButtonViewModel(SecondButtonModel model)
@@ -40,6 +37,12 @@ namespace Masterclass.Revit.SecondButton
         private void OnClose(Window win)
         {
             win.Close();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void RaisePropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
