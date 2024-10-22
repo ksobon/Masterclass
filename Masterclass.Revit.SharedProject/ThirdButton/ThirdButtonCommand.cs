@@ -1,7 +1,7 @@
 ﻿using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Masterclass.Revit.Utilities;
+using Nice3point.Revit.Toolkit.External;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -14,11 +14,11 @@ namespace Masterclass.Revit.ThirdButton
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    public class ThirdButtonCommand : IExternalCommand
+    public class ThirdButtonCommand : ExternalCommand
     {
         public static ThirdButtonView View { get; set; }
 
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public override void Execute()
         {
             try
             {
@@ -28,11 +28,9 @@ namespace Masterclass.Revit.ThirdButton
                         View.WindowState = WindowState.Normal;
 
                     View.Activate();
-                    return Result.Succeeded;
                 }
 
-                var uiApp = commandData.Application;
-                var m = new ThirdButtonModel(uiApp);
+                var m = new ThirdButtonModel(UiApplication);
                 var vm = new ThirdButtonViewModel(m);
                 var v = new ThirdButtonView
                 {
@@ -48,12 +46,10 @@ namespace Masterclass.Revit.ThirdButton
                 View.Closing += OnViewClosing;
 
                 v.Show();
-
-                return Result.Succeeded;
             }
             catch (Exception e)
             {
-                return Result.Failed;
+                // ignored
             }
         }
 
@@ -72,11 +68,13 @@ namespace Masterclass.Revit.ThirdButton
         public static void CreateButton(RibbonPanel panel)
         {
             var assembly = Assembly.GetExecutingAssembly();
+            var type = typeof(ThirdButtonCommand);
+
             panel.AddItem(new PushButtonData(
-                MethodBase.GetCurrentMethod()?.DeclaringType?.Name,
+                type.Name,
                 "Third" + Environment.NewLine + "Button",
                 assembly.Location,
-                MethodBase.GetCurrentMethod()?.DeclaringType?.FullName
+                type.FullName
             )
             {
                 ToolTip = "Third button command.",

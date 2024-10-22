@@ -1,30 +1,27 @@
-﻿using System;
-using System.Reflection;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using Masterclass.Revit.Utilities;
+using Nice3point.Revit.Toolkit.External;
+using System;
+using System.Reflection;
 
 namespace Masterclass.Revit.FourthButton
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    public class FourthButtonCommand : IExternalCommand
+    public class FourthButtonCommand : ExternalCommand
     {
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public override void Execute()
         {
             try
             {
-                var app = commandData.Application;
-                DockablePanelUtils.ShowDockablePanel(app);
+                DockablePanelUtils.ShowDockablePanel(UiApplication);
             }
             catch (Exception e)
             {
-                return Result.Failed;
+                // ignored
             }
-
-            return Result.Succeeded;
         }
 
         public static void CreateButton(RibbonPanel panel)

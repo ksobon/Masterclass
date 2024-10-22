@@ -43,7 +43,11 @@
 		<PackageReference Include="CommonServiceLocator" Version="2.0.2" />
 		<PackageReference Include="EPPlus" Version="4.5.3.3" />
 		<PackageReference Include="MessagePack" Version="2.5.172" />
-		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2025.0.0" />
+		<PackageReference Include="Nice3point.Revit.Toolkit" Version="2025.0.3" />
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2025.0.0">
+			<ExcludeAssets>runtime</ExcludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">

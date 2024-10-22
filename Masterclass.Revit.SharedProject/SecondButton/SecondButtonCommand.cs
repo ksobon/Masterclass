@@ -1,54 +1,53 @@
-﻿using System;
+﻿using Autodesk.Revit.Attributes;
+using Autodesk.Revit.UI;
+using Masterclass.Revit.Utilities;
+using Nice3point.Revit.Toolkit.External;
+using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Interop;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Masterclass.Revit.Utilities;
 
 namespace Masterclass.Revit.SecondButton
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    public class SecondButtonCommand : IExternalCommand
+    public class SecondButtonCommand : ExternalCommand
     {
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public override void Execute()
         {
             try
             {
-                var uiApp = commandData.Application;
-                var m = new SecondButtonModel(uiApp);
+                var m = new SecondButtonModel(UiApplication);
                 var vm = new SecondButtonViewModel(m);
                 var v = new SecondButtonView
                 {
                     DataContext = vm
                 };
 
-                var unused = new WindowInteropHelper(v)
+                _ = new WindowInteropHelper(v)
                 {
                     Owner = Process.GetCurrentProcess().MainWindowHandle
                 };
 
                 v.ShowDialog();
-
-                return Result.Succeeded;
             }
             catch (Exception e)
             {
-                return Result.Failed;
+                // ignored
             }
         }
 
         public static void CreateButton(RibbonPanel panel)
         {
             var assembly = Assembly.GetExecutingAssembly();
+            var type = typeof(SecondButtonCommand);
+
             panel.AddItem(new PushButtonData(
-                MethodBase.GetCurrentMethod().DeclaringType?.Name,
+                type.Name,
                 "Second" + Environment.NewLine + "Button",
                 assembly.Location,
-                MethodBase.GetCurrentMethod().DeclaringType?.FullName
+                type.FullName
             )
             {
                 ToolTip = "Second button command.",

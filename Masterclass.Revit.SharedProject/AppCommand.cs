@@ -6,6 +6,7 @@ using Masterclass.Revit.FourthButton;
 using Masterclass.Revit.SecondButton;
 using Masterclass.Revit.ThirdButton;
 using Masterclass.Revit.Utilities;
+using Nice3point.Revit.Toolkit.External;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ using System.Reflection;
 
 namespace Masterclass.Revit
 {
-    public class AppCommand : IExternalApplication
+    public class AppCommand : ExternalApplication
     {
         public static ThirdButtonRequestHandler ThirdButtonHandler { get; set; }
         public static ExternalEvent ThirdButtonEvent { get; set; }
@@ -47,47 +48,54 @@ namespace Masterclass.Revit
             };
         }
 
-        public Result OnStartup(UIControlledApplication app)
+        public override void OnStartup()
         {
-            AssemblyPath = Assembly.GetAssembly(GetType()).Location;
+            var message = "Hello world";
+//            AssemblyPath = Assembly.GetAssembly(GetType()).Location;
 
-            try
-            {
-                app.CreateRibbonTab("Masterclass");
-            }
-            catch (Exception e)
-            {
-                // ignored
-            }
+//            try
+//            {
+//                Application.CreateRibbonTab("Masterclass");
+//            }
+//            catch (Exception e)
+//            {
+//                // ignored
+//            }
 
-#if Revit2021 || Revit2022
-            var ribbonPanel = app.GetRibbonPanels("Masterclass").FirstOrDefault(x => x.Name == "Masterclass") ??
-                              app.CreateRibbonPanel("Masterclass", "Masterclass");
-#else
-            var ribbonPanel = app.GetRibbonPanels("Masterclass").FirstOrDefault(x => x.Name == "Masterclass") ??
-                              app.CreateRibbonPanel("Masterclass", "Masterclass");
-#endif
+//#if Revit2021 || Revit2022
+//            var ribbonPanel = Application.GetRibbonPanels("Masterclass").FirstOrDefault(x => x.Name == "Masterclass") ??
+//                              Application.CreateRibbonPanel("Masterclass", "Masterclass");
+//#else
+//            var ribbonPanel = Application.GetRibbonPanels("Masterclass").FirstOrDefault(x => x.Name == "Masterclass") ??
+//                              Application.CreateRibbonPanel("Masterclass", "Masterclass");
+//#endif
 
-            // (Konrad) Create buttons.
-            FirstButtonCommand.CreateButton(ribbonPanel);
-            ribbonPanel.AddSeparator();
-            SecondButtonCommand.CreateButton(ribbonPanel);
-            ribbonPanel.AddSeparator();
-            ThirdButtonCommand.CreateButton(ribbonPanel);
-            ribbonPanel.AddSeparator();
-            FourthButtonCommand.CreateButton(ribbonPanel);
+//            // (Konrad) Create buttons.
+//            FirstButtonCommand.CreateButton(ribbonPanel);
+//            ribbonPanel.AddSeparator();
+//            SecondButtonCommand.CreateButton(ribbonPanel);
+//            ribbonPanel.AddSeparator();
+//            ThirdButtonCommand.CreateButton(ribbonPanel);
+//            ribbonPanel.AddSeparator();
+//            FourthButtonCommand.CreateButton(ribbonPanel);
 
-            DockablePanelUtils.RegisterDockablePanel(app);
+//            DockablePanelUtils.RegisterDockablePanel(Application);
 
-            app.ControlledApplication.DocumentChanged += OnDocumentChanged;
-            app.ControlledApplication.DocumentSaved += OnDocumentSaved;
-            app.ControlledApplication.DocumentSynchronizingWithCentral += OnDocumentSynchronizingWithCentral;
-            app.ControlledApplication.DocumentOpened += OnDocumentOpened;
+//            Application.ControlledApplication.DocumentChanged += OnDocumentChanged;
+//            Application.ControlledApplication.DocumentSaved += OnDocumentSaved;
+//            Application.ControlledApplication.DocumentSynchronizingWithCentral += OnDocumentSynchronizingWithCentral;
+//            Application.ControlledApplication.DocumentOpened += OnDocumentOpened;
 
-            ThirdButtonHandler = new ThirdButtonRequestHandler();
-            ThirdButtonEvent = ExternalEvent.Create(ThirdButtonHandler);
+//            ThirdButtonHandler = new ThirdButtonRequestHandler();
+//            ThirdButtonEvent = ExternalEvent.Create(ThirdButtonHandler);
+        }
 
-            return Result.Succeeded;
+        public override void OnShutdown()
+        {
+            Application.ControlledApplication.DocumentChanged -= OnDocumentChanged;
+            Application.ControlledApplication.DocumentSaved -= OnDocumentSaved;
+            Application.ControlledApplication.DocumentSynchronizingWithCentral -= OnDocumentSynchronizingWithCentral;
+            Application.ControlledApplication.DocumentOpened -= OnDocumentOpened;
         }
 
         private void OnDocumentSaved(object sender, DocumentSavedEventArgs e)
@@ -152,15 +160,6 @@ namespace Masterclass.Revit
             var doc = e.GetDocument();
             var addedElements = e.GetAddedElementIds().Select(x => new ElementWrapper(doc.GetElement(x))).ToList();
             Messages.RaiseElementsAdded(new Messages.ElementsAddedEventArgs(addedElements));
-        }
-
-        public Result OnShutdown(UIControlledApplication app)
-        {
-            app.ControlledApplication.DocumentChanged -= OnDocumentChanged;
-            app.ControlledApplication.DocumentSynchronizingWithCentral -= OnDocumentSynchronizingWithCentral;
-            app.ControlledApplication.DocumentOpened -= OnDocumentOpened;
-
-            return Result.Succeeded;
         }
     }
 }

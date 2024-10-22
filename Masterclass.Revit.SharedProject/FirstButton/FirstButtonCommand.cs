@@ -1,40 +1,40 @@
-﻿using System;
-using System.Reflection;
-using System.Windows;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using Masterclass.Revit.Utilities;
+using Nice3point.Revit.Toolkit.External;
+using System;
+using System.Reflection;
+using System.Windows;
 
 namespace Masterclass.Revit.FirstButton
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    public class FirstButtonCommand : IExternalCommand
+    public class FirstButtonCommand : ExternalCommand
     {
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public override void Execute()
         {
             try
             {
-                System.Windows.MessageBox.Show("Hell world!", "AEC Tech", MessageBoxButton.OK);
-
-                return Result.Succeeded;
+                MessageBox.Show("Hell world!", "AEC Tech", MessageBoxButton.OK);
             }
             catch (Exception e)
             {
-                return Result.Failed;
+                // ignored
             }
         }
 
         public static void CreateButton(RibbonPanel panel)
         {
             var assembly = Assembly.GetExecutingAssembly();
+            var type = typeof(FirstButtonCommand);
+
             panel.AddItem(new PushButtonData(
-                MethodBase.GetCurrentMethod().DeclaringType?.Name,
+                type.Name,
                 "First" + Environment.NewLine + "Button",
                 assembly.Location,
-                MethodBase.GetCurrentMethod().DeclaringType?.FullName
+                type.FullName
             )
             {
                 ToolTip = "First button command.",
